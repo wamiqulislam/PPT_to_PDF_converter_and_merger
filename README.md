@@ -12,7 +12,7 @@ A simple Python script to convert PowerPoint files (`.ppt` / `.pptx`) to PDF and
   - `convert` → convert PPTs to separate PDFs
   - `merge` → merge existing PDFs
   - `convert_and_merge` → convert and merge into one PDF
-- Download all PDFs (and merged PDF) as a single ZIP in Colab
+- Supports downloading all PDFs (and merged PDF) as a single ZIP in Colab
 
 ## Setup (Colab)
 
@@ -24,44 +24,20 @@ A simple Python script to convert PowerPoint files (`.ppt` / `.pptx`) to PDF and
 !pip install PyPDF2 --quiet
 ```
 
-2. Reset folders:
+2. Upload PPT/PPTX Files:
 
-```python
-!rm -rf /content/ppt_input /content/pdf_output
-!mkdir /content/ppt_input /content/pdf_output
-```
+Click the |choose files| button and select all the files you would like to convert
 
-3. Upload your PPT/PPTX files to `/content/ppt_input`.
+3. Choose the mode (optional).
 
-## Usage
+Change the mode here, depending on if you only want to convert to pdf, make a merged pdf, or both
 
 ```python
 # Change mode based on what you want: "convert", "merge", "convert_and_merge"
 MODE = "convert_and_merge"
-convert_ppt_to_pdf(MODE)
-
-# After conversion/merge, create a ZIP of all PDFs for download
-import os
-import zipfile
-from google.colab import files
-
-PDF_DIR = "/content/pdf_output"
-ZIP_PATH = "/content/all_pdfs.zip"
-
-with zipfile.ZipFile(ZIP_PATH, 'w', zipfile.ZIP_DEFLATED) as zipf:
-    for file in os.listdir(PDF_DIR):
-        if file.endswith(".pdf"):
-            zipf.write(
-                os.path.join(PDF_DIR, file),
-                arcname=file
-            )
-
-print("✅ PDFs zipped successfully")
-files.download(ZIP_PATH)
 ```
 
-- Converted PDFs and merged PDF (if mode includes merge) will appear in `/content/pdf_output`.
-- The ZIP file `all_pdfs.zip` will contain **all PDFs** for easy download.
+- Converted PDFs and merged PDF (if mode includes merge) will appear in `/content/pdf_output` adn will be automatically zipped and downloaded
 
 ## Notes
 
